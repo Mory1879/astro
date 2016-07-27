@@ -8,17 +8,22 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-    <div class="container" id='astroapp'>
+    <div class="container astroapp">
       <h1>German astronauts</h1>
+      <div class="">
+        Hide astronauts without multiple flights:
+        <button class="hide-astro btn-xsm btn-info">Hide</button>
+        <button class="show-astro btn-xsm btn-info" style="display:none">Show</button>
+      </div>
       <table class="table table-striped">
         <caption></caption>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Name <button class="name-down"><span class="glyphicon glyphicon-arrow-down name-down"/></button></th>
             <th>Date</th>
             <th>Duration</th>
             <th>Mission</th>
-            <th>Multiple flights(yes/no)</th>
+            <th>Multiple flights(yes/no) <button style="display:none" class="name-up"><span  class="glyphicon glyphicon-arrow-down name-up"/></button></th>
             <th>Action</th>
           </tr>
           <tr>

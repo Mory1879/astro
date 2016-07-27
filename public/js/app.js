@@ -50,7 +50,7 @@ var AstronautView = Backbone.View.extend({
 		'click .edit-astro': 'edit', // event to allow editing
 		'click .update-astro': 'update', // event to submit edited changes
 		'click .cancel': 'cancel',
-		'click .delete-astro': 'delete'
+		'click .delete-astro': 'delete',
 	},
 
   edit: function() {
@@ -141,13 +141,8 @@ $(document).ready(function() {
 			date: $('.new-date').val(),
 			days: $('.new-duration').val(),
       mission: $('.new-mission').val(),
-      // checkbox fix
-      isMultiple: (function () {
-        if($('.new-flight').val()=='on'){
-          return true;
-        }
-        return false;
-      } ())
+      // checkbox fix v2
+      isMultiple: $(".new-flight").prop("checked")? true : false
     });
     $('.new-name').val('');
     $('.new-date').val('');
