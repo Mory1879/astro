@@ -6,24 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Astronauts list</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <div class="container astroapp">
       <h1>German astronauts</h1>
       <div class="">
-        Hide astronauts without multiple flights:
+        Show astronauts only with multiple flights:
         <button class="hide-astro btn-xsm btn-info">Hide</button>
-        <button class="show-astro btn-xsm btn-info" style="display:none">Show</button>
+        <button class="show-astro btn-xsm btn-info">Show</button>
       </div>
       <table class="table table-striped">
         <caption></caption>
         <thead>
           <tr>
-            <th>Name <span style="display:none" class="name-sort glyphicon glyphicon-arrow-down"/></th>
-            <th>Date <span class="date-sort glyphicon glyphicon-arrow-down"/></th>
-            <th>Duration <span class="duration-sort glyphicon glyphicon-arrow-down"/></th>
-            <th>Mission <span class="mission-sort glyphicon glyphicon-arrow-down"/></th>
-            <th>Multiple flights(yes/no) <span class="mult-sort glyphicon glyphicon-arrow-down"/></th>
+            <th>Name<span class="name-sort glyphicon glyphicon-arrow-down"/></th>
+            <th>Date<span class="date-sort glyphicon glyphicon-arrow-down"/></th>
+            <th>Duration<span class="duration-sort glyphicon glyphicon-arrow-down"/></th>
+            <th>Mission<span class="mission-sort glyphicon glyphicon-arrow-down"/></th>
+            <th>Been in space<span class="mult-sort glyphicon glyphicon-arrow-down"/></th>
             <th>Action</th>
           </tr>
           <tr>
@@ -46,13 +47,13 @@
       <td><span class="days"><%= days %></span></td>
       <td><span class="mission"><%= mission %></span></td>
       <td>
-        <span class="isMultiple <% print(isMultiple ? 'glyphicon glyphicon-plus' : 'glyphicon glyphicon-minus') %>"></span>
+        <span class="isMultiple <% print(isMultiple ? 'glyphicon glyphicon-plus' : 'glyphicon glyphicon-minus')%>" mult="<% print(isMultiple)?true:false%>"></span>
       </td>
       <td>
         <button type="button" class="btn btn-warning edit-astro"><span class='glyphicon glyphicon-pencil'/></button>
         <button type="button" class="btn btn-danger delete-astro"><span class='glyphicon glyphicon-trash'/></button>
-        <button class="btn btn-success update-astro" style="display:none"><span class='glyphicon glyphicon-ok'/></button>
-        <button class="btn btn-danger cancel" style="display:none"><span class='glyphicon glyphicon-remove'/></button>
+        <button class="btn btn-success update-astro"><span class='glyphicon glyphicon-ok'/></button>
+        <button class="btn btn-danger cancel"><span class='glyphicon glyphicon-remove'/></button>
       </td>
     </script>
 
