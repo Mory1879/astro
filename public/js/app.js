@@ -17,7 +17,7 @@ var Astronaut = Backbone.Model.extend({
 var AstronautList = Backbone.Collection.extend({
   url: 'http://localhost:3000/api/astronauts',
   initialize: function () {
-    this.sortVar = 'Name';
+    this.sortVar = 'name';
   },
   comparator: function(model){
     return model.get(this.sortVar);
@@ -55,7 +55,6 @@ var AstronautView = Backbone.View.extend({
 		var days = this.$('.days').html();
     var mission = this.$('.mission').html();
     var isMultiple = (this.$(".isMultiple").attr('mult'))==="true"?true:false;
-
 
 		this.$('.name').html('<input type="text" class="form-control name-update" value="' + name + '">');
 		this.$('.date').html('<input type="text" class="form-control date-update" value="' + date + '">');
@@ -101,11 +100,11 @@ var AstronautsView = Backbone.View.extend({
 	el: $('.table-body'),
 
 	initialize: function() {
-		var self = this;
+		var that = this;
 		this.model.on('add', this.render, this);
 		this.model.on('change', function() {
 			setTimeout(function() {
-				self.render();
+				that.render();
 			}, 30);
 		},this);
 		this.model.on('remove', this.render, this);
@@ -113,7 +112,7 @@ var AstronautsView = Backbone.View.extend({
     this.model.fetch({
 			success: function(response) {
 				_.each(response.toJSON(), function(item) {
-					console.log('Successfully GOT astronaut with id: ' + item._id);
+					console.log('Successfully fetched astronaut with id: ' + item._id);
 				})
 			},
 			error: function() {
@@ -123,10 +122,10 @@ var AstronautsView = Backbone.View.extend({
 	},
 
 	render: function() {
-		var self = this;
+		var that = this;
 		this.$el.html('');
 		_.each(this.model.toArray(), function(astronaut) {
-			self.$el.append((new AstronautView({model: astronaut})).render().$el);
+			that.$el.append((new AstronautView({model: astronaut})).render().$el);
 		});
 		return this;
 	}
@@ -135,6 +134,7 @@ var AstronautsView = Backbone.View.extend({
 var appView = new AstronautsView;
 
 $(document).ready(function() {
+  // Adding new astronaut
 	$('.new-astro').on('click', function() {
     var astronaut = new Astronaut({
 			name: $('.new-name').val(),
@@ -159,6 +159,29 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+
+  // Hiding and displaying astronauts who has multiple flights
+  $('.show-astro').on('click', function () {
+    $('.show-astro').hide();
+    $('.hide-astro').show();
+
+    var astro = astronautList.where({isMultiple: true});
+    astronautList.reset(astro);
+    appView.render();
+  });
+
+  $('.hide-astro').on('click', function () {
+    $('.hide-astro').hide();
+    $('.show-astro').show();
+
+    var astro = astronautList.where({isMultiple: true});
+    astronautList.fetch();
+    appView.render();
+  });
+
+
+  // Sortings
   $('.name-sort').on('click',function () {
     astronautList.sortVar = 'name';
     astronautList.sort();
@@ -169,6 +192,7 @@ $(document).ready(function() {
     $('.duration-sort').show();
     $('.mission-sort').show();
   });
+
   $('.mult-sort').on('click',function () {
     astronautList.sortVar = 'isMultiple';
     astronautList.sort();
@@ -179,6 +203,7 @@ $(document).ready(function() {
     $('.duration-sort').show();
     $('.mission-sort').show();
   });
+
   $('.date-sort').on('click',function () {
     astronautList.sortVar = 'date';
     astronautList.sort();
@@ -189,6 +214,7 @@ $(document).ready(function() {
     $('.duration-sort').show();
     $('.mission-sort').show();
   });
+
   $('.duration-sort').on('click',function () {
     astronautList.sortVar = 'days';
     astronautList.sort();
@@ -199,6 +225,7 @@ $(document).ready(function() {
     $('.duration-sort').hide();
     $('.mission-sort').show();
   });
+
   $('.mission-sort').on('click',function () {
     astronautList.sortVar = 'mission';
     astronautList.sort();
