@@ -30,7 +30,13 @@ var Astronaut = Backbone.Model.extend({
 
 // Collection
 var AstronautList = Backbone.Collection.extend({
-  url: 'http://localhost:3000/api/astronauts'
+  url: 'http://localhost:3000/api/astronauts',
+  initialize: function () {
+    this.sortVar = 'Name';
+  },
+  comparator: function(model){
+    return model.get(this.sortVar);
+  }
 });
 
 
@@ -50,7 +56,7 @@ var AstronautView = Backbone.View.extend({
 		'click .edit-astro': 'edit', // event to allow editing
 		'click .update-astro': 'update', // event to submit edited changes
 		'click .cancel': 'cancel',
-		'click .delete-astro': 'delete',
+		'click .delete-astro': 'delete'
 	},
 
   edit: function() {
@@ -149,7 +155,6 @@ $(document).ready(function() {
     $('.new-duration').val('');
     $('.new-mission').val('');
     $('.new-flight').val('');
-		console.log(astronaut.toJSON());
 		astronautList.add(astronaut);
     astronaut.save(null, {
 			success: function(response) {
@@ -159,5 +164,55 @@ $(document).ready(function() {
 				console.log('Fail!');
 			}
 		});
-	})
+	});
+  $('.name-sort').on('click',function () {
+    astronautList.sortVar = 'name';
+    astronautList.sort();
+    appView.render();
+    $('.name-sort').hide();
+    $('.mult-sort').show();
+    $('.date-sort').show();
+    $('.duration-sort').show();
+    $('.mission-sort').show();
+  });
+  $('.mult-sort').on('click',function () {
+    astronautList.sortVar = 'isMultiple';
+    astronautList.sort();
+    appView.render();
+    $('.mult-sort').hide();
+    $('.name-sort').show();
+    $('.date-sort').show();
+    $('.duration-sort').show();
+    $('.mission-sort').show();
+  });
+  $('.date-sort').on('click',function () {
+    astronautList.sortVar = 'date';
+    astronautList.sort();
+    appView.render();
+    $('.mult-sort').show();
+    $('.name-sort').show();
+    $('.date-sort').hide();
+    $('.duration-sort').show();
+    $('.mission-sort').show();
+  });
+  $('.duration-sort').on('click',function () {
+    astronautList.sortVar = 'days';
+    astronautList.sort();
+    appView.render();
+    $('.mult-sort').show();
+    $('.name-sort').show();
+    $('.date-sort').show();
+    $('.duration-sort').hide();
+    $('.mission-sort').show();
+  });
+  $('.mission-sort').on('click',function () {
+    astronautList.sortVar = 'mission';
+    astronautList.sort();
+    appView.render();
+    $('.mult-sort').show();
+    $('.name-sort').show();
+    $('.date-sort').show();
+    $('.duration-sort').show();
+    $('.mission-sort').hide();
+  });
 })
