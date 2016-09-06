@@ -1,5 +1,4 @@
 # Astronaut list
-Test task for RAIDIX
 
 Dependencies: Bootstrap, Express, body-parser, mongoose and MongoDB.
 
